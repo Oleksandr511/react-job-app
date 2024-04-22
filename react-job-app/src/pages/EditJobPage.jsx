@@ -17,7 +17,7 @@ const EditJobPage = () => {
     const [contactPhone, setContactPhone] = useState(job.company.contactPhone)
 
     const submitForm = (e) => {
-        
+
     }
 
     return (
@@ -31,8 +31,7 @@ const EditJobPage = () => {
 
                         <div className="mb-4">
                             <label htmlFor="type" className="block text-gray-700 font-bold mb-2"
-                            >Job Type</label
-                            >
+                            >Job Type</label>
                             <select
                                 id="type"
                                 name="type"
@@ -50,8 +49,7 @@ const EditJobPage = () => {
 
                         <div className="mb-4">
                             <label className="block text-gray-700 font-bold mb-2"
-                            >Job Listing Name</label
-                            >
+                            >Job Listing Name</label>
                             <input
                                 type="text"
                                 id="title"
@@ -67,8 +65,7 @@ const EditJobPage = () => {
                             <label
                                 htmlFor="description"
                                 className="block text-gray-700 font-bold mb-2"
-                            >Description</label
-                            >
+                            >Description</label>
                             <textarea
                                 id="description"
                                 name="description"
@@ -82,8 +79,7 @@ const EditJobPage = () => {
 
                         <div className="mb-4">
                             <label htmlFor="type" className="block text-gray-700 font-bold mb-2"
-                            >Salary</label
-                            >
+                            >Salary</label>
                             <select
                                 id="salary"
                                 name="salary"
@@ -126,8 +122,7 @@ const EditJobPage = () => {
 
                         <div className="mb-4">
                             <label htmlFor="company" className="block text-gray-700 font-bold mb-2"
-                            >Company Name</label
-                            >
+                            >Company Name</label>
                             <input
                                 type="text"
                                 id="company"
@@ -143,8 +138,7 @@ const EditJobPage = () => {
                             <label
                                 htmlFor="company_description"
                                 className="block text-gray-700 font-bold mb-2"
-                            >Company Description</label
-                            >
+                            >Company Description</label>
                             <textarea
                                 id="company_description"
                                 name="company_description"
@@ -160,8 +154,7 @@ const EditJobPage = () => {
                             <label
                                 htmlFor="contact_email"
                                 className="block text-gray-700 font-bold mb-2"
-                            >Contact Email</label
-                            >
+                            >Contact Email</label>
                             <input
                                 type="email"
                                 id="contact_email"
@@ -177,8 +170,7 @@ const EditJobPage = () => {
                             <label
                                 htmlFor="contact_phone"
                                 className="block text-gray-700 font-bold mb-2"
-                            >Contact Phone</label
-                            >
+                            >Contact Phone</label>
                             <input
                                 type="tel"
                                 id="contact_phone"
@@ -193,8 +185,7 @@ const EditJobPage = () => {
                         <div>
                             <button
                                 className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
-                                type="submit"
-                            >
+                                type="submit">
                                 Add Job
                             </button>
                         </div>
