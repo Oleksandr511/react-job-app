@@ -1,43 +1,71 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+import { useReducer } from 'react';
 
+let initialState = {
+    title: '',
+    type: 'Full-Time',
+    location: '',
+    description: '',
+    salary: 'Under $50K',
+    companyName: '',
+    companyDescription: '',
+    contactEmail: '',
+    contactPhone: ''
+}
 
-const AddJobPage = ({addJobSubmit}) => {
-    const [title, setTitle] = useState('')
-    const [type,  setType] = useState('Full-Time')
-    const [location, setLocation] = useState('')
-    const [description, setDescription] = useState('')
-    const [salary, setSalary] = useState('Under $50K')
-    const [companyName, setCompanyName] = useState('')
-    const [companyDescription, setCompanyDescription] = useState('')
-    const [contactEmail, setContactEmail] = useState('')
-    const [contactPhone, setContactPhone] = useState('')
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'set_title':
+            return { ...state, title: action.payload };
+        case 'set_type':
+            return { ...state, type: action.payload };
+        case 'set_location':
+            return { ...state, location: action.payload };
+        case 'set_description':
+            return { ...state, description: action.payload };
+        case 'set_salary':
+            return { ...state, salary: action.payload };
+        case 'set_companyName':
+            return { ...state, companyName: action.payload };
+        case 'set_companyDescription':
+            return { ...state, companyDescription: action.payload };
+        case 'set_contactEmail':
+            return { ...state, contactEmail: action.payload };
+        case 'set_contactPhone':
+            return { ...state, contactPhone: action.payload };
+        default:
+            return state;
+    }
+}
+const AddJobPage = ({ addJobSubmit }) => {
+    const [state, dispatch] = useReducer(reducer, initialState)
     
     const navigate = useNavigate()
-    
+
 
     const submitForm = (e) => {
         e.preventDefault()
-       const newJob = {
-        title,
-        type,
-        location,
-        description,
-        salary,
-        company: {
-            name: companyName,
-            description: companyDescription,
-            contactEmail,
-            contactPhone
+        const newJob = {
+            title,
+            type,
+            location,
+            description,
+            salary,
+            company: {
+                name: companyName,
+                description: companyDescription,
+                contactEmail,
+                contactPhone
+            }
         }
-       }
-       addJobSubmit(newJob)
+        addJobSubmit(newJob)
 
-       toast.success('Job success added')
+        toast.success('Job success added')
 
-       return navigate('/jobs')
+        return navigate('/jobs')
     }
 
     return (
@@ -51,15 +79,14 @@ const AddJobPage = ({addJobSubmit}) => {
 
                         <div className="mb-4">
                             <label htmlFor="type" className="block text-gray-700 font-bold mb-2"
-                            >Job Type</label
-                            >
+                            >Job Type</label>
                             <select
                                 id="type"
                                 name="type"
                                 className="border rounded w-full py-2 px-3"
                                 required
-                                value={type}
-                                onChange={(e)=>setType(e.target.value)}
+                                value={state.type}
+                                onChange={(e) => dispatch({type: 'set_type', payload: e.target.value})}
                             >
                                 <option value="Full-Time">Full-Time</option>
                                 <option value="Part-Time">Part-Time</option>
@@ -70,8 +97,7 @@ const AddJobPage = ({addJobSubmit}) => {
 
                         <div className="mb-4">
                             <label className="block text-gray-700 font-bold mb-2"
-                            >Job Listing Name</label
-                            >
+                            >Job Listing Name</label>
                             <input
                                 type="text"
                                 id="title"
@@ -79,38 +105,36 @@ const AddJobPage = ({addJobSubmit}) => {
                                 className="border rounded w-full py-2 px-3 mb-2"
                                 placeholder="eg. Beautiful Apartment In Miami"
                                 required
-                                value={title}
-                                onChange={(e)=>setTitle(e.target.value)}
+                                value={state.title}
+                                onChange={(e) => dispatch({ type: 'set_title', payload: e.target.value })}
                             />
                         </div>
                         <div className="mb-4">
                             <label
                                 htmlFor="description"
                                 className="block text-gray-700 font-bold mb-2"
-                            >Description</label
-                            >
+                            >Description</label>
                             <textarea
                                 id="description"
                                 name="description"
                                 className="border rounded w-full py-2 px-3"
                                 rows="4"
                                 placeholder="Add any job duties, expectations, requirements, etc"
-                                value={description}
-                                onChange={(e)=>setDescription(e.target.value)}
+                                value={state.description}
+                                onChange={(e) => dispatch({ type: 'set_description', payload: e.target.value })}
                             ></textarea>
                         </div>
 
                         <div className="mb-4">
                             <label htmlFor="type" className="block text-gray-700 font-bold mb-2"
-                            >Salary</label
-                            >
+                            >Salary</label>
                             <select
                                 id="salary"
                                 name="salary"
                                 className="border rounded w-full py-2 px-3"
                                 required
-                                value={salary}
-                                onChange={(e)=>setSalary(e.target.value)}
+                                value={state.salary}
+                                onChange={(e) => dispatch({ type: 'set_salary', payload: e.target.value })}
                             >
                                 <option value="Under $50K">Under $50K</option>
                                 <option value="$50K - 60K">$50K - $60K</option>
@@ -137,8 +161,8 @@ const AddJobPage = ({addJobSubmit}) => {
                                 className='border rounded w-full py-2 px-3 mb-2'
                                 placeholder='Company Location'
                                 required
-                                value={location}
-                                onChange={(e)=>setLocation(e.target.value)}
+                                value={state.location}
+                                onChange={(e) => dispatch({ type: 'set_location', payload: e.target.value })}
                             />
                         </div>
 
@@ -146,16 +170,15 @@ const AddJobPage = ({addJobSubmit}) => {
 
                         <div className="mb-4">
                             <label htmlFor="company" className="block text-gray-700 font-bold mb-2"
-                            >Company Name</label
-                            >
+                            >Company Name</label>
                             <input
                                 type="text"
                                 id="company"
                                 name="company"
                                 className="border rounded w-full py-2 px-3"
                                 placeholder="Company Name"
-                                value={companyName}
-                                onChange={(e)=>setCompanyName(e.target.value)}
+                                value={state.companyName}
+                                onChange={(e) => dispatch({ type: 'set_companyName', payload: e.target.value })}
                             />
                         </div>
 
@@ -163,16 +186,15 @@ const AddJobPage = ({addJobSubmit}) => {
                             <label
                                 htmlFor="company_description"
                                 className="block text-gray-700 font-bold mb-2"
-                            >Company Description</label
-                            >
+                            >Company Description</label>
                             <textarea
                                 id="company_description"
                                 name="company_description"
                                 className="border rounded w-full py-2 px-3"
                                 rows="4"
                                 placeholder="What does your company do?"
-                                value={companyDescription}
-                                onChange={(e)=>setCompanyDescription(e.target.value)}
+                                value={state.companyDescription}
+                                onChange={(e) => dispatch({ type: 'set_companyDescription', payload: e.target.value })}
                             ></textarea>
                         </div>
 
@@ -180,8 +202,7 @@ const AddJobPage = ({addJobSubmit}) => {
                             <label
                                 htmlFor="contact_email"
                                 className="block text-gray-700 font-bold mb-2"
-                            >Contact Email</label
-                            >
+                            >Contact Email</label>
                             <input
                                 type="email"
                                 id="contact_email"
@@ -189,32 +210,30 @@ const AddJobPage = ({addJobSubmit}) => {
                                 className="border rounded w-full py-2 px-3"
                                 placeholder="Email address for applicants"
                                 required
-                                value={contactEmail}
-                                onChange={(e)=>setContactEmail(e.target.value)}
+                                value={state.contactEmail}
+                                onChange={(e) => dispatch({ type: 'set_contactEmail', payload: e.target.value })}
                             />
                         </div>
                         <div className="mb-4">
                             <label
                                 htmlFor="contact_phone"
                                 className="block text-gray-700 font-bold mb-2"
-                            >Contact Phone</label
-                            >
+                            >Contact Phone</label>
                             <input
                                 type="tel"
                                 id="contact_phone"
                                 name="contact_phone"
                                 className="border rounded w-full py-2 px-3"
                                 placeholder="Optional phone for applicants"
-                                value={contactPhone}
-                                onChange={(e)=>setContactPhone(e.target.value)}
+                                value={state.contactPhone}
+                                onChange={(e) => dispatch({ type: 'set_contactPhone', payload: e.target.value })}
                             />
                         </div>
 
                         <div>
                             <button
                                 className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
-                                type="submit"
-                            >
+                                type="submit">
                                 Add Job
                             </button>
                         </div>
